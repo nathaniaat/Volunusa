@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volunusa — Volunteer App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+      :root {
+        --deep-green: #3b6255;
+        --muted-green: #8ba49a;
+        --soft-mint: #cbded3;
+        --warm-orange: #f4a261;
+        --beige: #d2c49e;
+        --off-white: #f7f7f5;
+        --light-grey: #e2dfda;
+        --dark-text: #2f2f2f;
+        --white: #ffffff;
+        --card-shadow: 0 4px 20px rgba(59, 98, 85, 0.1);
+        --card-shadow-hover: 0 10px 36px rgba(59, 98, 85, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f4f6f8;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* MAIN LAYOUT */
+      .app-showcase {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 20px auto 40px;
+        max-width: 420px;
+        padding-bottom: 60px;
+      }
+
+      /* PHONE FRAME */
+      .phone-frame {
+        width: min(100%, 380px);
+        max-width: 380px;
+        background: #ffffff;
+        border-radius: 32px;
+        border: 1px solid #d1d5db;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .phone-screen {
+        background: var(--off-white);
+        min-height: 780px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* SCREEN PAGES */
+      .screen-page {
+        display: none;
+        animation: screenIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .screen-page.active {
+        display: block;
+      }
+      @keyframes screenIn {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* ====== HOME SCREEN ====== */
+      .home-header {
+        background: var(--deep-green);
+        padding: 20px 20px 32px;
+        position: relative;
+        overflow: hidden;
+      }
+      .home-header::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        right: -20px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .home-header::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .home-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .home-greeting {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+      .home-name {
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-top: 2px;
+      }
+      .home-notif-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        position: relative;
+      }
+      .notif-dot {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        background: var(--warm-orange);
+        border-radius: 50%;
+        border: 2px solid var(--deep-green);
+      }
+
+      .home-stats {
+        display: flex;
+        gap: 10px;
+      }
+      .home-stat-pill {
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 10px 14px;
+        flex: 1;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .home-stat-num {
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .home-stat-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.65rem;
+        font-weight: 500;
+        margin-top: 1px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .home-body {
+        padding: 20px;
+      }
+      .section-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .section-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--dark-text);
+      }
+      .see-all {
+        color: var(--deep-green);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* Event Cards */
+      .event-cards-scroll {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+      }
+      .event-cards-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .event-card {
+        min-width: 200px;
+        background: var(--white);
+        border-radius: 16px;
+        overflow: hidden;
+        flex-shrink: 0;
+        cursor: pointer;
+        box-shadow: var(--card-shadow);
+        transition: all 0.25s;
+        border: 1.5px solid transparent;
+      }
+      .event-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--card-shadow-hover);
+        border-color: var(--soft-mint);
+      }
+      .event-card-img i,
+      .event-list-img i,
+      .nav-item-icon i,
+      .detail-share i,
+      .modal-icon i,
+      .profile-avatar img,
+      .portfolio-row-icon i,
+      .cal-reminder i,
+      .cal-confirmed i,
+      .profile-section-title i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .event-card-icon,
+      .event-list-img i,
+      .nav-item-icon i,
+      .detail-share i,
+      .modal-icon i,
+      .portfolio-row-icon i,
+      .cal-title i,
+      .profile-section-title i {
+        font-size: 1.35rem;
+      }
+      .event-card-img i,
+      .event-list-img i {
+        color: #ffffff;
+      }
+      .event-list-img i,
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+      }
+      .profile-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #f4f4f4;
+        border: 1px solid #d1d5db;
+      }
+      .detail-share {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+        color: var(--deep-green);
+      }
+      .event-card-icon {
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+      }
+      .event-list-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--soft-mint), var(--muted-green));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .event-card-img {
+        height: 100px;
+        width: 100%;
+        object-fit: cover;
+        background: linear-gradient(
+          135deg,
+          var(--soft-mint) 0%,
+          var(--muted-green) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        position: relative;
+      }
+      .event-card-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: var(--deep-green);
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .event-card-body {
+        padding: 12px;
+      }
+      .event-card-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: var(--dark-text);
+        margin-bottom: 4px;
+      }
+      .event-card-org {
+        font-size: 0.7rem;
+        color: var(--muted-green);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+      .event-tags {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+      .event-tag {
+        background: var(--soft-mint);
+        color: var(--deep-green);
+        font-size: 0.6rem;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 50px;
+      }
+      .event-tag.orange {
+        background: rgba(244, 162, 97, 0.15);
+        color: #c47a30;
+      }
+
+      /* List event cards */
+      .event-list-card {
+        background: var(--white);
+        border-radius: 14px;
+        padding: 14px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        cursor: pointer;
+        box-shadow: var(--card-shadow);
+        transition: all 0.2s;
+        border: 1.5px solid transparent;
+      }
+      .event-list-card:hover {
+        border-color: var(--soft-mint);
+        transform: translateY(-2px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      .event-list-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        flex-shrink: 0;
+        background: linear-gradient(
+          135deg,
+          var(--soft-mint),
+          var(--muted-green)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+      .event-list-info {
+        flex: 1;
+      }
+      .event-list-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--dark-text);
+        margin-bottom: 3px;
+      }
+      .event-list-meta {
+        font-size: 0.7rem;
+        color: var(--muted-green);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 6px;
+      }
+      .view-link {
+        color: var(--deep-green);
+        font-size: 0.7rem;
+        font-weight: 600;
+      }
+
+      /* Bottom Nav */
+      .bottom-nav {
+        background: var(--white);
+        border-top: 1px solid var(--light-grey);
+        display: flex;
+        padding: 10px 0 14px;
+      }
+      .nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .nav-item-icon {
+        font-size: 1.2rem;
+      }
+      .nav-item-label {
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: var(--muted-green);
+        letter-spacing: 0.3px;
+      }
+      .nav-item.active .nav-item-label {
+        color: var(--deep-green);
+      }
+      .nav-item.active .nav-item-icon {
+        filter: drop-shadow(0 0 4px rgba(59, 98, 85, 0.4));
+      }
+
+      /* ====== EXPLORE SCREEN ====== */
+      .explore-header {
+        background: var(--white);
+        padding: 20px 20px 16px;
+        border-bottom: 1px solid var(--light-grey);
+      }
+      .explore-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--dark-text);
+        margin-bottom: 12px;
+      }
+      .search-bar {
+        background: var(--off-white);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 14px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .search-bar input {
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 0.85rem;
+        color: var(--dark-text);
+        flex: 1;
+        font-family: "Inter", sans-serif;
+      }
+      .search-bar input::placeholder {
+        color: #aaa;
+      }
+      .filter-chips {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .filter-chips::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        padding: 6px 14px;
+        border-radius: 50px;
+        border: 1.5px solid var(--light-grey);
+        font-size: 0.72rem;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: var(--white);
+        color: var(--dark-text);
+      }
+      .chip.active {
+        background: var(--deep-green);
+        border-color: var(--deep-green);
+        color: #fff;
+      }
+      .chip:hover:not(.active) {
+        border-color: var(--deep-green);
+        color: var(--deep-green);
+      }
+
+      .explore-body {
+        padding: 16px 20px;
+        overflow-y: auto;
+        max-height: 620px;
+      }
+      .explore-section-label {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--dark-text);
+        margin: 0 0 14px;
+      }
+
+      /* ====== EVENT DETAIL SCREEN ====== */
+      .detail-hero {
+        height: 200px;
+        background: linear-gradient(
+          160deg,
+          var(--deep-green) 0%,
+          #2d4f43 60%,
+          #1a3329 100%
+        );
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+      }
+      .detail-back {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .detail-share {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .detail-body {
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 530px;
+      }
+      .detail-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--dark-text);
+        margin-bottom: 6px;
+      }
+      .detail-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .detail-meta {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.75rem;
+        color: var(--muted-green);
+      }
+      .detail-tags {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .detail-tag {
+        background: var(--soft-mint);
+        color: var(--deep-green);
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 50px;
+      }
+      .detail-section-label {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.88rem;
+        color: var(--dark-text);
+        margin-bottom: 8px;
+      }
+      .detail-desc {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+      .detail-req-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+      .detail-req-row span {
+        font-size: 0.8rem;
+        color: #555;
+        line-height: 1.5;
+      }
+      .detail-portfolio-note {
+        background: rgba(59, 98, 85, 0.07);
+        border: 1px solid rgba(59, 98, 85, 0.15);
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-bottom: 16px;
+        font-size: 0.78rem;
+        color: var(--deep-green);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .detail-actions {
+        padding: 0 20px 20px;
+      }
+      .btn-apply {
+        width: 100%;
+        background: var(--deep-green);
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        padding: 15px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 6px 20px rgba(59, 98, 85, 0.3);
+      }
+      .btn-apply:hover {
+        background: #2d4f43;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 28px rgba(59, 98, 85, 0.35);
+      }
+      .btn-fundraise {
+        width: 100%;
+        background: transparent;
+        color: var(--dark-text);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 14px;
+        padding: 13px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn-fundraise:hover {
+        border-color: var(--warm-orange);
+        color: #c47a30;
+      }
+
+      /* ====== CALENDAR SCREEN ====== */
+      .calendar-header {
+        background: var(--white);
+        padding: 20px;
+        border-bottom: 1px solid var(--light-grey);
+      }
+      .cal-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--dark-text);
+        margin-bottom: 16px;
+      }
+      .cal-body {
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 680px;
+      }
+      .cal-event-card {
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: var(--card-shadow);
+        border-left: 4px solid var(--deep-green);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .cal-event-card:hover {
+        transform: translateX(4px);
+        box-shadow: var(--card-shadow-hover);
+      }
+      .cal-event-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .cal-event-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--dark-text);
+      }
+      .cal-event-date {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--muted-green);
+        background: var(--off-white);
+        padding: 3px 8px;
+        border-radius: 50px;
+      }
+      .cal-event-org {
+        font-size: 0.72rem;
+        color: var(--muted-green);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 8px;
+      }
+      .cal-event-tags {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+      .cal-event-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .cal-reminder {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.68rem;
+        color: #c47a30;
+        font-weight: 600;
+      }
+      .cal-confirmed {
+        background: rgba(59, 98, 85, 0.1);
+        color: var(--deep-green);
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 50px;
+      }
+
+      .notif-section-label {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--dark-text);
+        margin: 20px 0 12px;
+      }
+      .notif-card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 14px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .notif-card:hover {
+        transform: translateX(4px);
+      }
+      .notif-icon-wrap {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--soft-mint);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .notif-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--dark-text);
+        margin-bottom: 3px;
+      }
+      .notif-desc {
+        font-size: 0.72rem;
+        color: #888;
+        line-height: 1.4;
+      }
+
+      /* ====== PROFILE SCREEN ====== */
+      .profile-header {
+        background: linear-gradient(160deg, var(--deep-green) 0%, #2d4f43 100%);
+        padding: 28px 20px 32px;
+        position: relative;
+      }
+      .profile-avatar-wrap {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .profile-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--soft-mint);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+      }
+      .profile-name {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #fff;
+      }
+      .profile-username {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 2px;
+      }
+      .profile-verified {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 500;
+      }
+      .verified-badge {
+        background: var(--warm-orange);
+        color: #fff;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+      }
+
+      .profile-body {
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 580px;
+      }
+      .profile-section {
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 14px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      }
+      .profile-section-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.88rem;
+        color: var(--dark-text);
+        margin-bottom: 12px;
+      }
+      .interest-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .interest-tag {
+        background: rgba(59, 98, 85, 0.08);
+        color: var(--deep-green);
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 50px;
+        border: 1px solid rgba(59, 98, 85, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .pref-btn {
+        width: 100%;
+        background: var(--off-white);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-top: 10px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--dark-text);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .pref-btn:hover {
+        border-color: var(--deep-green);
+        color: var(--deep-green);
+      }
+      .portfolio-row {
+        background: var(--off-white);
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .portfolio-row:hover {
+        background: var(--soft-mint);
+      }
+      .portfolio-row-icon {
+        font-size: 1rem;
+      }
+      .portfolio-row-text {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--dark-text);
+      }
+      .portfolio-row-text span {
+        color: var(--muted-green);
+        font-size: 0.72rem;
+        font-weight: 400;
+        display: block;
+        margin-top: 1px;
+      }
+
+      /* SIDE INFO PANEL */
+      .side-panel {
+        flex: 1;
+        max-width: 380px;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .side-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(59, 98, 85, 0.2);
+        border-radius: 16px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+      }
+      .side-card-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #fff;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .side-card-title .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--warm-orange);
+        border-radius: 50%;
+      }
+      .side-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      .side-item-icon {
+        font-size: 1rem;
+        margin-top: 1px;
+      }
+      .side-item-text {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.5;
+      }
+      .side-item-text strong {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        display: block;
+      }
+      .screen-btn {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(59, 98, 85, 0.3);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 6px;
+      }
+      .screen-btn.active,
+      .screen-btn:hover {
+        background: rgba(59, 98, 85, 0.3);
+        border-color: var(--deep-green);
+        color: #fff;
+      }
+      .side-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.7rem;
+        color: var(--soft-mint);
+        background: rgba(203, 222, 211, 0.1);
+        border: 1px solid rgba(203, 222, 211, 0.2);
+        padding: 3px 10px;
+        border-radius: 50px;
+        margin: 3px;
+      }
+
+      @media print {
+        body {
+          background: #fff;
+          padding: 0;
+        }
+        .page-header,
+        .side-panel,
+        .bottom-nav,
+        .page-nav,
+        .modal-overlay {
+          display: none !important;
+        }
+        .app-showcase {
+          margin: 0 auto;
+          max-width: 100%;
+        }
+        .phone-frame {
+        width: min(100%, 380px);
+        max-width: 380px;
+        background: #ffffff;
+        border-radius: 32px;
+        border: 1px solid #d1d5db;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+      }
+      }
+
+      /* Apply Success Modal */
+      .modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        align-items: flex-end;
+        z-index: 50;
+        animation: fadeIn 0.2s ease;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .modal-sheet {
+        background: var(--white);
+        border-radius: 24px 24px 0 0;
+        padding: 28px 24px;
+        width: 100%;
+        text-align: center;
+        animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      .modal-emoji {
+        font-size: 3rem;
+        margin-bottom: 12px;
+      }
+      .modal-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--dark-text);
+        margin-bottom: 8px;
+      }
+      .modal-desc {
+        font-size: 0.82rem;
+        color: #777;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+      .modal-close {
+        width: 100%;
+        background: var(--deep-green);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 13px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-showcase">
+      <!-- PHONE -->
+      <div class="phone-frame">
+
+        <!-- HOME SCREEN -->
+        <div class="phone-screen screen-page active" id="screen-home">
+          <div class="home-header">
+            <div class="home-topbar">
+              <div>
+                <div class="home-greeting">Selamat pagi,</div>
+                <div class="home-name">Jane Doe</div>
+              </div>
+              <button
+                class="home-notif-btn"
+                onclick="
+                  document
+                    .getElementById('modal-notif')
+                    .classList.toggle('show')
+                "
+              >
+                <i class="bx bx-bell"></i>
+                <div class="notif-dot"></div>
+              </button>
+            </div>
+            <div class="home-stats">
+              <div class="home-stat-pill">
+                <div class="home-stat-num">4</div>
+                <div class="home-stat-label">Events Joined</div>
+              </div>
+              <div class="home-stat-pill">
+                <div class="home-stat-num">100%</div>
+                <div class="home-stat-label">Attendance</div>
+              </div>
+              <div class="home-stat-pill">
+                <div class="home-stat-num">2</div>
+                <div class="home-stat-label">Upcoming</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-body">
+            <div class="section-title-row">
+              <div class="section-title">Rekomendasi Untukmu</div>
+              <div class="see-all" onclick="switchNavTo('explore')">
+                Lihat Semua
+              </div>
+            </div>
+            <div class="event-cards-scroll">
+              <div class="event-card" onclick="switchNavTo('detail')">
+                <div class="event-card-img">
+                  <i class="bx bx-water event-card-icon"></i>
+                  <div class="event-card-badge">Conservation</div>
+                </div>
+                <div class="event-card-body">
+                  <div class="event-card-title">Ciliwung River Cleanup</div>
+                  <div class="event-card-org"><i class="bx bx-building"></i> EcoNusantara · <i class="bx bx-map"></i> Jakarta</div>
+                  <div class="event-tags">
+                    <span class="event-tag">Conservation</span>
+                    <span class="event-tag">Field Work</span>
+                  </div>
+                </div>
+              </div>
+              <div class="event-card">
+                <div
+                  class="event-card-img"
+                  style="background: linear-gradient(135deg, #f4c274, #e8874a)"
+                >
+                  <i class="bx bx-book event-card-icon"></i>
+                  <div
+                    class="event-card-badge"
+                    style="background: var(--warm-orange)"
+                  >
+                    Teaching
+                  </div>
+                </div>
+                <div class="event-card-body">
+                  <div class="event-card-title">Street Children Teaching</div>
+                  <div class="event-card-org">
+                    <i class="bx bx-building"></i> Rumah Belajar · <i class="bx bx-map-pin"></i> Bandung
+                  </div>
+                  <div class="event-tags">
+                    <span class="event-tag orange">Teaching</span>
+                    <span class="event-tag orange">Communication</span>
+                  </div>
+                </div>
+              </div>
+              <div class="event-card">
+                <div
+                  class="event-card-img"
+                  style="background: linear-gradient(135deg, #a8d5ba, #6ab08e)"
+                >
+                  <i class="bx bx-pulse event-card-icon"></i>
+                  <div class="event-card-badge">Healthcare</div>
+                </div>
+                <div class="event-card-body">
+                  <div class="event-card-title">Community Health Service</div>
+                  <div class="event-card-org">
+                    <i class="bx bx-building"></i> Sehati Foundation · <i class="bx bx-map"></i> Jakarta
+                  </div>
+                  <div class="event-tags">
+                    <span class="event-tag">Healthcare</span>
+                    <span class="event-tag">Medical</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title-row">
+              <div class="section-title">Semua Kegiatan</div>
+              <div class="see-all" onclick="switchNavTo('explore')">
+                Lihat Semua
+              </div>
+            </div>
+
+            <div class="event-list-card" onclick="switchNavTo('detail')">
+              <div class="event-list-img"><i class="bx bx-water"></i></div>
+              <div class="event-list-info">
+                <div class="event-list-title">Ciliwung River Cleanup</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> EcoNusantara &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag">Conservation</span
+                  ><span class="event-tag">Field Work</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #f4c274, #e8874a)"
+              >
+                <i class="bx bx-book"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Street Children Teaching</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> Rumah Belajar &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Bandung
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag orange">Teaching</span
+                  ><span class="event-tag orange">Communication</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #a8d5ba, #6ab08e)"
+              >
+                <i class="bx bx-leaf"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Mangrove Planting</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> SeaChange &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Tangerang
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag">Conservation</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchNavTo('home')">
+              <div class="nav-item-icon"><i class="bx bx-home"></i></div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('explore')">
+              <div class="nav-item-icon"><i class="bx bx-search"></i></div>
+              <div class="nav-item-label">Explore</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('calendar')">
+              <div class="nav-item-icon"><i class="bx bx-calendar"></i></div>
+              <div class="nav-item-label">Calendar</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('profile')">
+              <div class="nav-item-icon"><i class="bx bx-user"></i></div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+
+          <!-- Notif Modal -->
+          <div
+            class="modal-overlay"
+            id="modal-notif"
+            onclick="this.classList.remove('show')"
+          >
+            <div class="modal-sheet" onclick="event.stopPropagation()">
+              <div class="modal-icon"><i class="bx bx-bell"></i></div>
+              <div class="modal-title">Notifikasi</div>
+              <div style="text-align: left; margin-bottom: 16px">
+                <div
+                  class="notif-card"
+                  style="
+                    background: var(--off-white);
+                    border-radius: 12px;
+                    padding: 12px;
+                    margin-bottom: 8px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                  "
+                >
+                  <div style="font-size: 1.5rem"><i class="bx bx-water"></i></div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        font-weight: 600;
+                        color: var(--dark-text);
+                        margin-bottom: 2px;
+                      "
+                    >
+                      Tomorrow: Ciliwung River Cleanup
+                    </div>
+                    <div style="font-size: 0.72rem; color: #888">
+                      Don't forget to bring your gear, meet at 07:00
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="notif-card"
+                  style="
+                    background: var(--off-white);
+                    border-radius: 12px;
+                    padding: 12px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                  "
+                >
+                  <div style="font-size: 1.5rem"><i class="bx bx-time"></i></div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        font-weight: 600;
+                        color: var(--dark-text);
+                        margin-bottom: 2px;
+                      "
+                    >
+                      Schedule Change
+                    </div>
+                    <div style="font-size: 0.72rem; color: #888">
+                      Community Health Service rescheduled to April 27
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="modal-close"
+                onclick="
+                  document
+                    .getElementById('modal-notif')
+                    .classList.remove('show')
+                "
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPLORE SCREEN -->
+        <div class="phone-screen screen-page" id="screen-explore">
+          <div class="explore-header">
+            <div class="explore-title">Explore</div>
+            <div class="search-bar">
+              <span><i class="bx bx-search"></i></span>
+              <input
+                type="text"
+                placeholder="Search events, skills, location..."
+              />
+            </div>
+            <div class="filter-chips">
+              <div class="chip active">All</div>
+              <div class="chip">Teaching</div>
+              <div class="chip">Conservation</div>
+              <div class="chip">Healthcare</div>
+              <div class="chip">Jakarta</div>
+              <div class="chip">Bandung</div>
+              <div class="chip">Weekend</div>
+            </div>
+          </div>
+          <div class="explore-body">
+            <div class="explore-section-label">Explore Activities</div>
+            <div class="event-list-card" onclick="switchNavTo('detail')">
+              <div class="event-list-img"><i class="bx bx-water"></i></div>
+              <div class="event-list-info">
+                <div class="event-list-title">Ciliwung River Cleanup</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> EcoNusantara &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag">Conservation</span
+                  ><span class="event-tag">Field Work</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #f4c274, #e8874a)"
+              >
+                <i class="bx bx-book"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Street Children Teaching</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> Rumah Belajar &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Bandung
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag orange">Teaching</span
+                  ><span class="event-tag orange">Communication</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #a8d5ba, #6ab08e)"
+              >
+                <i class="bx bx-hospital"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Community Health Service</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> Sehati Foundation &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag">Healthcare</span
+                  ><span class="event-tag">Medical</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #b5d5a8, #7ab06e)"
+              >
+                <i class="bx bx-leaf"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Mangrove Planting</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> SeaChange &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Tangerang
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag">Conservation</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+            <div class="event-list-card">
+              <div
+                class="event-list-img"
+                style="background: linear-gradient(135deg, #ffd6a5, #f4a261)"
+              >
+                <i class="bx bx-droplet"></i>
+              </div>
+              <div class="event-list-info">
+                <div class="event-list-title">Blood Donation Drive</div>
+                <div class="event-list-meta">
+                  <i class="bx bx-building"></i> PMI Jakarta &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+                </div>
+                <div class="event-tags" style="margin-bottom: 4px">
+                  <span class="event-tag orange">Healthcare</span>
+                </div>
+                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item" onclick="switchNavTo('home')">
+              <div class="nav-item-icon"><i class="bx bx-home"></i></div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item active" onclick="switchNavTo('explore')">
+              <div class="nav-item-icon"><i class="bx bx-search"></i></div>
+              <div class="nav-item-label">Explore</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('calendar')">
+              <div class="nav-item-icon"><i class="bx bx-calendar"></i></div>
+              <div class="nav-item-label">Calendar</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('profile')">
+              <div class="nav-item-icon"><i class="bx bx-user"></i></div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DETAIL SCREEN -->
+        <div class="phone-screen screen-page" id="screen-detail">
+          <div class="detail-hero">
+            <i class="bx bx-layer detail-hero-icon"></i>
+            <button class="detail-back" onclick="switchNavTo('explore')">
+              <i class="bx bx-arrow-back"></i>
+            </button>
+            <button class="detail-share"><i class="bx bx-share-alt"></i></button>
+          </div>
+          <div class="detail-body">
+            <div class="detail-title">Ciliwung River Cleanup</div>
+            <div class="detail-meta-row">
+              <div class="detail-meta"><i class="bx bx-calendar"></i> 2025-04-12</div>
+              <div class="detail-meta"><i class="bx bx-map"></i> Jakarta</div>
+            </div>
+            <div class="detail-tags">
+              <span class="detail-tag">Conservation</span>
+              <span class="detail-tag">Field Work</span>
+            </div>
+            <div class="detail-section-label">Task Description</div>
+            <div class="detail-desc">
+              Join us in Ciliwung River Cleanup organized by EcoNusantara.
+              Volunteers will assist with on-site coordination, participant
+              registration, and documentation.
+            </div>
+            <div class="detail-section-label">Requirements</div>
+            <div class="detail-req-row">
+              <span><i class="bx bx-check-circle"></i><span>Conservation & Field Work skills</span>
+            </div>
+            <div class="detail-req-row">
+              <span><i class="bx bx-check-circle"></i><span>Commitment to full event duration</span>
+            </div>
+            <div class="detail-req-row">
+              <span><i class="bx bx-check-circle"></i><span>Physical fitness for outdoor work</span>
+            </div>
+            <div class="detail-portfolio-note">
+              <i class="bx bx-star"></i> Your integrated portfolio will be attached automatically when
+              applying.
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button
+              class="btn-apply"
+              onclick="
+                document.getElementById('modal-apply').classList.add('show')
+              "
+            >
+              <i class="bx bx-rocket"></i> Apply with Profile
+            </button>
+            <button class="btn-fundraise"><i class="bx bx-dollar"></i> Support Fundraising</button>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item" onclick="switchNavTo('home')">
+              <div class="nav-item-icon"><i class="bx bx-home"></i></div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item active" onclick="switchNavTo('explore')">
+              <div class="nav-item-icon"><i class="bx bx-search"></i></div>
+              <div class="nav-item-label">Explore</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('calendar')">
+              <div class="nav-item-icon"><i class="bx bx-calendar"></i></div>
+              <div class="nav-item-label">Calendar</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('profile')">
+              <div class="nav-item-icon"><i class="bx bx-user"></i></div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+          <!-- Apply Modal -->
+          <div
+            class="modal-overlay"
+            id="modal-apply"
+            onclick="this.classList.remove('show')"
+          >
+            <div class="modal-sheet" onclick="event.stopPropagation()">
+              <div class="modal-emoji"><i class="bx bx-check-circle"></i></div>
+              <div class="modal-title">Lamaran Terkirim!</div>
+              <div class="modal-desc">
+                Profil dan portofoliomu telah dikirimkan ke EcoNusantara. Tunggu
+                konfirmasi dalam 2–3 hari kerja.
+              </div>
+              <button
+                class="modal-close"
+                onclick="
+                  document
+                    .getElementById('modal-apply')
+                    .classList.remove('show')
+                "
+              >
+                Kembali ke Beranda
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALENDAR SCREEN -->
+        <div class="phone-screen screen-page" id="screen-calendar">
+          <div class="calendar-header">
+            <div class="cal-title"><i class="bx bx-calendar"></i> Kalender</div>
+          </div>
+          <div class="cal-body">
+            <div class="section-title-row" style="margin-bottom: 14px">
+              <div class="section-title">Event Terdaftar</div>
+            </div>
+            <div class="cal-event-card">
+              <div class="cal-event-top">
+                <div class="cal-event-title">Ciliwung River Cleanup</div>
+                <div class="cal-event-date">2025-04-12</div>
+              </div>
+              <div class="cal-event-org">
+                <i class="bx bx-building"></i> EcoNusantara &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+              </div>
+              <div class="cal-event-tags">
+                <span class="event-tag">Conservation</span
+                ><span class="event-tag">Field Work</span>
+              </div>
+              <div class="cal-event-footer">
+                <div class="cal-reminder"><i class="bx bx-bell"></i> Reminder: 1 day before</div>
+                <div class="cal-confirmed"><i class="bx bx-check-circle"></i> Confirmed</div>
+              </div>
+            </div>
+            <div
+              class="cal-event-card"
+              style="border-left-color: var(--warm-orange)"
+            >
+              <div class="cal-event-top">
+                <div class="cal-event-title">Community Health Service</div>
+                <div class="cal-event-date">2025-04-26</div>
+              </div>
+              <div class="cal-event-org">
+                <i class="bx bx-building"></i> Sehati Foundation &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
+              </div>
+              <div class="cal-event-tags">
+                <span class="event-tag orange">Healthcare</span
+                ><span class="event-tag orange">Medical</span>
+              </div>
+              <div class="cal-event-footer">
+                <div class="cal-reminder"><i class="bx bx-bell"></i> Reminder: 1 day before</div>
+                <div class="cal-confirmed"><i class="bx bx-check-circle"></i> Confirmed</div>
+              </div>
+            </div>
+
+            <div class="notif-section-label">Notifikasi</div>
+            <div class="notif-card">
+              <div class="notif-icon-wrap"><i class="bx bx-water"></i></div>
+              <div>
+                <div class="notif-title">Tomorrow: Ciliwung River Cleanup</div>
+                <div class="notif-desc">
+                  Don't forget to bring your gear, meet at 07:00
+                </div>
+              </div>
+            </div>
+            <div class="notif-card">
+              <div
+                class="notif-icon-wrap"
+                style="background: rgba(244, 162, 97, 0.15)"
+              >
+                <i class="bx bx-time"></i>
+              </div>
+              <div>
+                <div class="notif-title">Schedule Change</div>
+                <div class="notif-desc">
+                  Community Health Service rescheduled to April 27, 2025
+                </div>
+              </div>
+            </div>
+            <div class="notif-card">
+              <div
+                class="notif-icon-wrap"
+                style="background: rgba(203, 222, 211, 0.4)"
+              >
+                <i class="bx bx-check-circle"></i>
+              </div>
+              <div>
+                <div class="notif-title">Application Accepted!</div>
+                <div class="notif-desc">
+                  Congratulations! You've been accepted to Mangrove Planting
+                  event.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item" onclick="switchNavTo('home')">
+              <div class="nav-item-icon"><i class="bx bx-home"></i></div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('explore')">
+              <div class="nav-item-icon"><i class="bx bx-search"></i></div>
+              <div class="nav-item-label">Explore</div>
+            </div>
+            <div class="nav-item active" onclick="switchNavTo('calendar')">
+              <div class="nav-item-icon"><i class="bx bx-calendar"></i></div>
+              <div class="nav-item-label">Calendar</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('profile')">
+              <div class="nav-item-icon"><i class="bx bx-user"></i></div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE SCREEN -->
+        <div class="phone-screen screen-page" id="screen-profile">
+          <div class="profile-header">
+            <div class="profile-avatar-wrap">
+              <div class="profile-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile image" /></div>
+              <div>
+                <div class="profile-name">Jane Doe</div>
+                <div class="profile-username">
+                  @volunteer_jane · Joined 2024
+                </div>
+              </div>
+            </div>
+            <div class="profile-verified">
+              <div class="verified-badge">✓</div>
+              ID & Curriculum Vitae Verified
+            </div>
+          </div>
+          <div class="profile-body">
+            <div class="profile-section">
+              <div class="profile-section-title">Interest Areas</div>
+              <div class="interest-tags">
+                <div class="interest-tag">Conservation</div>
+                <div class="interest-tag">Teaching</div>
+                <div class="interest-tag">Healthcare</div>
+              </div>
+              <button class="pref-btn">
+                <i class="bx bx-cog"></i> Set preferences & smart filters
+              </button>
+            </div>
+            <div class="profile-section">
+              <div class="profile-section-title">Portfolio & Track Record</div>
+              <div class="portfolio-row">
+                <div class="portfolio-row-icon"><i class="bx bx-star"></i></div>
+                <div class="portfolio-row-text">
+                  Participated in 4 events • 100% attendance
+                  <span>Verified by organizers</span>
+                </div>
+              </div>
+              <div class="portfolio-row">
+                <div class="portfolio-row-icon"><i class="bx bx-time"></i></div>
+                <div class="portfolio-row-text">
+                  Last event: "Children Literacy Festival"
+                  <span>Mar 2025 · Teaching · Bandung</span>
+                </div>
+              </div>
+              <div class="portfolio-row">
+                <div class="portfolio-row-icon"><i class="bx bx-briefcase"></i></div>
+                <div class="portfolio-row-text">
+                  Skills: Communication, Field Work, Healthcare
+                  <span>Endorsed by 3 organizers</span>
+                </div>
+              </div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-section-title"><i class="bx bx-envelope"></i> Kontak</div>
+              <div style="font-size: 0.82rem; color: #555">
+                jane.doe@gmail.com
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item" onclick="switchNavTo('home')">
+              <div class="nav-item-icon"><i class="bx bx-home"></i></div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('explore')">
+              <div class="nav-item-icon"><i class="bx bx-search"></i></div>
+              <div class="nav-item-label">Explore</div>
+            </div>
+            <div class="nav-item" onclick="switchNavTo('calendar')">
+              <div class="nav-item-icon"><i class="bx bx-calendar"></i></div>
+              <div class="nav-item-label">Calendar</div>
+            </div>
+            <div class="nav-item active" onclick="switchNavTo('profile')">
+              <div class="nav-item-icon"><i class="bx bx-user"></i></div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <script>
+      const screens = ["home", "explore", "detail", "calendar", "profile"];
+
+      function showScreen(name, btn) {
+        screens.forEach((s) => {
+          document.getElementById("screen-" + s).classList.remove("active");
+          document.getElementById("btn-" + s)?.classList.remove("active");
+        });
+        document
+          .querySelectorAll(".page-nav button")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("screen-" + name).classList.add("active");
+        document.getElementById("btn-" + name)?.classList.add("active");
+        if (btn) btn.classList.add("active");
+      }
+
+      function switchNavTo(name) {
+        const btnMap = {
+          home: 0,
+          explore: 1,
+          detail: 2,
+          calendar: 3,
+          profile: 4,
+        };
+        const navBtns = document.querySelectorAll(".page-nav button");
+        showScreen(name, navBtns[btnMap[name]]);
+      }
+
+      // Filter chips interactivity
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", function () {
+          document
+            .querySelectorAll(".chip")
+            .forEach((c) => c.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
