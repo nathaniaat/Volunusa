@@ -661,6 +661,15 @@
         font-size: 1.2rem;
         margin-right: 10px;
         vertical-align: middle;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .event-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 10px;
       }
       .event-name-cell {
         font-weight: 600;
@@ -1533,8 +1542,13 @@
               <tbody>
                 <tr data-status="active">
                   <td>
-                    <span class="event-thumb"><i class="bx bx-sun"></i></span
-                    ><span class="event-name-cell">Beach Cleanup</span>
+                    <span class="event-thumb"
+                      ><img
+                        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&q=80"
+                        alt="Beach Cleanup"
+                        loading="lazy"
+                    /></span>
+                    <span class="event-name-cell">Beach Cleanup</span>
                     <div
                       style="
                         font-size: 0.7rem;
@@ -1542,9 +1556,7 @@
                         margin-left: 50px;
                         margin-top: -14px;
                       "
-                    >
-                      12 Apr 2026
-                    </div>
+                    ></div>
                   </td>
                   <td class="event-date-cell">12 Apr 2026</td>
                   <td>Surabaya</td>
@@ -1567,8 +1579,13 @@
                 </tr>
                 <tr data-status="completed">
                   <td>
-                    <span class="event-thumb"><i class="bx bx-leaf"></i></span
-                    ><span class="event-name-cell">Tree Planting</span>
+                    <span class="event-thumb"
+                      ><img
+                        src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=80&q=80"
+                        alt="Tree Planting"
+                        loading="lazy"
+                    /></span>
+                    <span class="event-name-cell">Tree Planting</span>
                   </td>
                   <td class="event-date-cell">20 Mar 2026</td>
                   <td>Malang</td>
@@ -1587,7 +1604,10 @@
                 <tr data-status="active">
                   <td>
                     <span class="event-thumb"
-                      ><i class="bx bx-droplet"></i></span
+                      ><img
+                        src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=80&q=80"
+                        alt="Blood Donation Drive"
+                        loading="lazy" /></span
                     ><span class="event-name-cell">Blood Donation Drive</span>
                   </td>
                   <td class="event-date-cell">5 Mar 2026</td>
@@ -1608,7 +1628,11 @@
                 </tr>
                 <tr data-status="pending">
                   <td>
-                    <span class="event-thumb"><i class="bx bx-book"></i></span
+                    <span class="event-thumb"
+                      ><img
+                        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=80&q=80"
+                        alt="Children's Literacy Festival"
+                        loading="lazy" /></span
                     ><span class="event-name-cell"
                       >Children's Literacy Festival</span
                     >
@@ -1635,7 +1659,11 @@
                 </tr>
                 <tr data-status="completed">
                   <td>
-                    <span class="event-thumb"><i class="bx bx-water"></i></span
+                    <span class="event-thumb"
+                      ><img
+                        src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=80&q=80"
+                        alt="Ciliwung River Cleanup"
+                        loading="lazy" /></span
                     ><span class="event-name-cell">Ciliwung River Cleanup</span>
                   </td>
                   <td class="event-date-cell">12 Jan 2026</td>
@@ -1721,9 +1749,20 @@
                     justify-content: center;
                     font-size: 2.5rem;
                     flex-shrink: 0;
+                    overflow: hidden;
                   "
                 >
-                  <i class="bx bx-sun"></i>
+                  <img
+                    src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=240&q=80"
+                    alt="Beach Cleanup"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      display: block;
+                    "
+                    loading="lazy"
+                  />
                 </div>
                 <div>
                   <div class="chart-title" style="margin-bottom: 6px">
@@ -2906,9 +2945,20 @@
                       justify-content: center;
                       font-size: 1.1rem;
                       flex-shrink: 0;
+                      overflow: hidden;
                     "
                   >
-                    <i class="bx bx-sun"></i>
+                    <img
+                      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=76&q=80"
+                      alt="Beach Cleanup"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                      "
+                      loading="lazy"
+                    />
                   </div>
                   <div style="flex: 1">
                     <div style="font-size: 0.82rem; font-weight: 600">
@@ -2951,9 +3001,20 @@
                       justify-content: center;
                       font-size: 1.1rem;
                       flex-shrink: 0;
+                      overflow: hidden;
                     "
                   >
-                    <i class="bx bx-leaf"></i>
+                    <img
+                      src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=76&q=80"
+                      alt="Tree Planting"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                      "
+                      loading="lazy"
+                    />
                   </div>
                   <div style="flex: 1">
                     <div style="font-size: 0.82rem; font-weight: 600">
@@ -2996,9 +3057,20 @@
                       justify-content: center;
                       font-size: 1.1rem;
                       flex-shrink: 0;
+                      overflow: hidden;
                     "
                   >
-                    <i class="bx bx-droplet"></i>
+                    <img
+                      src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=76&q=80"
+                      alt="Blood Donation"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                      "
+                      loading="lazy"
+                    />
                   </div>
                   <div style="flex: 1">
                     <div style="font-size: 0.82rem; font-weight: 600">
@@ -3269,7 +3341,7 @@
                     class="btn btn-primary"
                     onclick="
                       showToast(
-                        '<i class=&quot;bx bx-star&quot;></i> Upgrade ke Premium! Hubungi tim kami.',
+                        '<i class=&quot;bx bx-star&quot;></i> Anda telah berada di Premium Plan!',
                       )
                     "
                   >
