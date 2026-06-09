@@ -483,10 +483,9 @@
         filter: drop-shadow(0 0 4px rgba(59, 98, 85, 0.4));
       }
 
-      /* ====== EXPLORE SCREEN ====== */
       .explore-header {
         background: var(--white);
-        padding: 20px 20px 16px;
+        padding: 20px 20px 12px;
         border-bottom: 1px solid var(--light-grey);
       }
       .explore-title {
@@ -550,16 +549,16 @@
       }
 
       .explore-body {
-        padding: 16px 20px;
+        padding: 14px 20px 8px;
         overflow-y: auto;
-        max-height: 620px;
+        max-height: 530px;
       }
       .explore-section-label {
         font-family: "Poppins", sans-serif;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.88rem;
         color: var(--dark-text);
-        margin: 0 0 14px;
+        margin: 0 0 12px;
       }
 
       /* ====== EVENT DETAIL SCREEN ====== */
@@ -1466,102 +1465,61 @@
         <div class="phone-screen screen-page" id="screen-explore">
           <div class="explore-header">
             <div class="explore-title">Explore</div>
-            <div class="search-bar">
+            <div class="search-bar" id="explore-search-bar">
               <span><i class="bx bx-search"></i></span>
               <input
                 type="text"
+                id="explore-search-input"
                 placeholder="Search events, skills, location..."
+                oninput="applyExploreFilters()"
+                autocomplete="off"
               />
+              <span id="explore-clear-btn" onclick="clearSearch()" style="cursor:pointer;color:#aaa;display:none;font-size:1.1rem;line-height:1;"><i class="bx bx-x"></i></span>
             </div>
-            <div class="filter-chips">
-              <div class="chip active">All</div>
-              <div class="chip">Teaching</div>
-              <div class="chip">Conservation</div>
-              <div class="chip">Healthcare</div>
-              <div class="chip">Jakarta</div>
-              <div class="chip">Bandung</div>
-              <div class="chip">Weekend</div>
+            <!-- Category chips -->
+            <div class="filter-chips" id="category-chips">
+              <div class="chip active" data-filter="all" onclick="selectChip(this,'category')">All</div>
+              <div class="chip" data-filter="teaching" onclick="selectChip(this,'category')">Teaching</div>
+              <div class="chip" data-filter="conservation" onclick="selectChip(this,'category')">Conservation</div>
+              <div class="chip" data-filter="healthcare" onclick="selectChip(this,'category')">Healthcare</div>
+              <div class="chip" data-filter="environment" onclick="selectChip(this,'category')">Environment</div>
+              <div class="chip" data-filter="social" onclick="selectChip(this,'category')">Social</div>
             </div>
-          </div>
-          <div class="explore-body">
-            <div class="explore-section-label">Explore Activities</div>
-            <div class="event-list-card" onclick="switchNavTo('detail')">
-              <div class="event-list-img" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=120&q=80" alt="Ciliwung River Cleanup" loading="lazy" /></div>
-              <div class="event-list-info">
-                <div class="event-list-title">Ciliwung River Cleanup</div>
-                <div class="event-list-meta">
-                  <i class="bx bx-building"></i> EcoNusantara &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
-                </div>
-                <div class="event-tags" style="margin-bottom: 4px">
-                  <span class="event-tag">Conservation</span
-                  ><span class="event-tag">Field Work</span>
-                </div>
-                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
-              </div>
+            <!-- Location chips -->
+            <div class="filter-chips" id="location-chips" style="margin-top:6px;">
+              <div class="chip active" data-filter="all" onclick="selectChip(this,'location')"><i class="bx bx-map" style="font-size:0.75rem;"></i> Semua Kota</div>
+              <div class="chip" data-filter="jakarta" onclick="selectChip(this,'location')">Jakarta</div>
+              <div class="chip" data-filter="bandung" onclick="selectChip(this,'location')">Bandung</div>
+              <div class="chip" data-filter="surabaya" onclick="selectChip(this,'location')">Surabaya</div>
+              <div class="chip" data-filter="tangerang" onclick="selectChip(this,'location')">Tangerang</div>
+              <div class="chip" data-filter="malang" onclick="selectChip(this,'location')">Malang</div>
             </div>
-            <div class="event-list-card">
-              <div class="event-list-img" style="padding:0;overflow:hidden;">
-                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=120&q=80" alt="Street Children Teaching" loading="lazy" />
-              </div>
-              <div class="event-list-info">
-                <div class="event-list-title">Street Children Teaching</div>
-                <div class="event-list-meta">
-                  <i class="bx bx-building"></i> Rumah Belajar &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Bandung
-                </div>
-                <div class="event-tags" style="margin-bottom: 4px">
-                  <span class="event-tag orange">Teaching</span
-                  ><span class="event-tag orange">Communication</span>
-                </div>
-                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
-              </div>
-            </div>
-            <div class="event-list-card">
-              <div class="event-list-img" style="padding:0;overflow:hidden;">
-                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=120&q=80" alt="Community Health Service" loading="lazy" />
-              </div>
-              <div class="event-list-info">
-                <div class="event-list-title">Community Health Service</div>
-                <div class="event-list-meta">
-                  <i class="bx bx-building"></i> Sehati Foundation &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
-                </div>
-                <div class="event-tags" style="margin-bottom: 4px">
-                  <span class="event-tag">Healthcare</span
-                  ><span class="event-tag">Medical</span>
-                </div>
-                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
-              </div>
-            </div>
-            <div class="event-list-card">
-              <div class="event-list-img" style="padding:0;overflow:hidden;">
-                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=120&q=80" alt="Mangrove Planting" loading="lazy" />
-              </div>
-              <div class="event-list-info">
-                <div class="event-list-title">Mangrove Planting</div>
-                <div class="event-list-meta">
-                  <i class="bx bx-building"></i> SeaChange &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> Tangerang
-                </div>
-                <div class="event-tags" style="margin-bottom: 4px">
-                  <span class="event-tag">Conservation</span>
-                </div>
-                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
-              </div>
-            </div>
-            <div class="event-list-card">
-              <div class="event-list-img" style="padding:0;overflow:hidden;">
-                <img src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=120&q=80" alt="Blood Donation Drive" loading="lazy" />
-              </div>
-              <div class="event-list-info">
-                <div class="event-list-title">Blood Donation Drive</div>
-                <div class="event-list-meta">
-                  <i class="bx bx-building"></i> PMI Jakarta &nbsp;·&nbsp; <i class="bx bx-map"></i> Jakarta
-                </div>
-                <div class="event-tags" style="margin-bottom: 4px">
-                  <span class="event-tag orange">Healthcare</span>
-                </div>
-                <div class="view-link">View details <i class="bx bx-chevron-right"></i></div>
+            <!-- Sort + result count row -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-bottom:4px;">
+              <div id="explore-result-count" style="font-size:0.72rem;color:#888;font-weight:600;"></div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:0.7rem;color:#aaa;">Urutkan:</span>
+                <select id="explore-sort" onchange="applyExploreFilters()" style="font-size:0.72rem;font-weight:600;color:var(--deep-green);background:rgba(59,98,85,0.07);border:1px solid rgba(59,98,85,0.15);border-radius:8px;padding:3px 8px;outline:none;cursor:pointer;font-family:'Inter',sans-serif;">
+                  <option value="recommended">Rekomendasi</option>
+                  <option value="newest">Terbaru</option>
+                  <option value="popular">Terpopuler</option>
+                </select>
               </div>
             </div>
           </div>
+
+          <div class="explore-body" id="explore-body">
+            <!-- Cards rendered by JS -->
+          </div>
+
+          <!-- Empty state -->
+          <div id="explore-empty" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;">
+            <div style="font-size:3rem;margin-bottom:12px;">🔍</div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.95rem;color:var(--dark-text);margin-bottom:6px;">Tidak ada kegiatan ditemukan</div>
+            <div style="font-size:0.8rem;color:#999;line-height:1.5;margin-bottom:16px;">Coba kata kunci lain atau ubah filter yang dipilih</div>
+            <button onclick="resetAllFilters()" style="background:var(--deep-green);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.8rem;cursor:pointer;">Reset Filter</button>
+          </div>
+
           <div class="bottom-nav">
             <div class="nav-item" onclick="switchNavTo('home')">
               <div class="nav-item-icon"><i class="bx bx-home"></i></div>
@@ -1875,6 +1833,400 @@
 
 
     <script>
+      // ============================================================
+      //  EVENTS DATA
+      // ============================================================
+      const EVENTS = [
+        {
+          id: 1,
+          title: "Ciliwung River Cleanup",
+          org: "EcoNusantara",
+          city: "Jakarta",
+          location: "jakarta",
+          categories: ["conservation"],
+          tags: ["Conservation", "Field Work"],
+          tagTypes: ["green", "green"],
+          date: "12 Apr 2025",
+          spots: 40,
+          spotsLeft: 12,
+          popularity: 95,
+          img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=120&q=80",
+          recommended: true,
+        },
+        {
+          id: 2,
+          title: "Street Children Teaching",
+          org: "Rumah Belajar",
+          city: "Bandung",
+          location: "bandung",
+          categories: ["teaching"],
+          tags: ["Teaching", "Communication"],
+          tagTypes: ["orange", "orange"],
+          date: "20 Apr 2025",
+          spots: 20,
+          spotsLeft: 7,
+          popularity: 88,
+          img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=120&q=80",
+          recommended: true,
+        },
+        {
+          id: 3,
+          title: "Community Health Service",
+          org: "Sehati Foundation",
+          city: "Jakarta",
+          location: "jakarta",
+          categories: ["healthcare"],
+          tags: ["Healthcare", "Medical"],
+          tagTypes: ["green", "green"],
+          date: "26 Apr 2025",
+          spots: 30,
+          spotsLeft: 4,
+          popularity: 90,
+          img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=120&q=80",
+          recommended: true,
+        },
+        {
+          id: 4,
+          title: "Mangrove Planting",
+          org: "SeaChange",
+          city: "Tangerang",
+          location: "tangerang",
+          categories: ["conservation", "environment"],
+          tags: ["Conservation", "Environment"],
+          tagTypes: ["green", "green"],
+          date: "3 May 2025",
+          spots: 50,
+          spotsLeft: 22,
+          popularity: 78,
+          img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 5,
+          title: "Blood Donation Drive",
+          org: "PMI Jakarta",
+          city: "Jakarta",
+          location: "jakarta",
+          categories: ["healthcare"],
+          tags: ["Healthcare"],
+          tagTypes: ["orange"],
+          date: "5 May 2025",
+          spots: 100,
+          spotsLeft: 60,
+          popularity: 72,
+          img: "https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 6,
+          title: "Children's Literacy Festival",
+          org: "Yayasan Literasi",
+          city: "Bandung",
+          location: "bandung",
+          categories: ["teaching", "social"],
+          tags: ["Teaching", "Literacy"],
+          tagTypes: ["orange", "orange"],
+          date: "10 May 2025",
+          spots: 25,
+          spotsLeft: 10,
+          popularity: 84,
+          img: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=120&q=80",
+          recommended: true,
+        },
+        {
+          id: 7,
+          title: "Urban Tree Planting Day",
+          org: "GreenCity Surabaya",
+          city: "Surabaya",
+          location: "surabaya",
+          categories: ["environment", "conservation"],
+          tags: ["Environment", "Field Work"],
+          tagTypes: ["green", "green"],
+          date: "17 May 2025",
+          spots: 60,
+          spotsLeft: 35,
+          popularity: 70,
+          img: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 8,
+          title: "Free Medical Check-Up",
+          org: "Dokter Untuk Negeri",
+          city: "Malang",
+          location: "malang",
+          categories: ["healthcare"],
+          tags: ["Healthcare", "Medical"],
+          tagTypes: ["orange", "orange"],
+          date: "24 May 2025",
+          spots: 15,
+          spotsLeft: 3,
+          popularity: 92,
+          img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 9,
+          title: "Coastal Clean-Up Surabaya",
+          org: "Ocean Warriors",
+          city: "Surabaya",
+          location: "surabaya",
+          categories: ["conservation", "environment"],
+          tags: ["Conservation", "Field Work"],
+          tagTypes: ["green", "green"],
+          date: "31 May 2025",
+          spots: 80,
+          spotsLeft: 45,
+          popularity: 80,
+          img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 10,
+          title: "Elderly Care & Visit",
+          org: "Peduli Lansia",
+          city: "Jakarta",
+          location: "jakarta",
+          categories: ["social", "healthcare"],
+          tags: ["Social", "Healthcare"],
+          tagTypes: ["orange", "green"],
+          date: "7 Jun 2025",
+          spots: 20,
+          spotsLeft: 8,
+          popularity: 76,
+          img: "https://images.unsplash.com/photo-1516307365426-bea591f05011?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 11,
+          title: "Bahasa Inggris untuk Desa",
+          org: "English Connect",
+          city: "Malang",
+          location: "malang",
+          categories: ["teaching"],
+          tags: ["Teaching", "Communication"],
+          tagTypes: ["orange", "orange"],
+          date: "14 Jun 2025",
+          spots: 15,
+          spotsLeft: 6,
+          popularity: 82,
+          img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&q=80",
+          recommended: false,
+        },
+        {
+          id: 12,
+          title: "Waste Sorting Workshop",
+          org: "Zero Waste ID",
+          city: "Bandung",
+          location: "bandung",
+          categories: ["environment", "social"],
+          tags: ["Environment", "Education"],
+          tagTypes: ["green", "orange"],
+          date: "21 Jun 2025",
+          spots: 30,
+          spotsLeft: 18,
+          popularity: 68,
+          img: "https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=120&q=80",
+          recommended: false,
+        },
+      ];
+
+      // ============================================================
+      //  FILTER STATE
+      // ============================================================
+      let activeCategory = "all";
+      let activeLocation = "all";
+
+      function selectChip(el, type) {
+        const group = type === "category" ? "#category-chips" : "#location-chips";
+        document.querySelectorAll(group + " .chip").forEach(c => c.classList.remove("active"));
+        el.classList.add("active");
+        if (type === "category") activeCategory = el.dataset.filter;
+        else activeLocation = el.dataset.filter;
+        applyExploreFilters();
+      }
+
+      function clearSearch() {
+        document.getElementById("explore-search-input").value = "";
+        document.getElementById("explore-clear-btn").style.display = "none";
+        applyExploreFilters();
+      }
+
+      function resetAllFilters() {
+        // reset category
+        document.querySelectorAll("#category-chips .chip").forEach(c => c.classList.remove("active"));
+        document.querySelector('#category-chips [data-filter="all"]').classList.add("active");
+        activeCategory = "all";
+        // reset location
+        document.querySelectorAll("#location-chips .chip").forEach(c => c.classList.remove("active"));
+        document.querySelector('#location-chips [data-filter="all"]').classList.add("active");
+        activeLocation = "all";
+        // reset search
+        document.getElementById("explore-search-input").value = "";
+        document.getElementById("explore-clear-btn").style.display = "none";
+        // reset sort
+        document.getElementById("explore-sort").value = "recommended";
+        applyExploreFilters();
+      }
+
+      function applyExploreFilters() {
+        const query = document.getElementById("explore-search-input").value.trim().toLowerCase();
+        const sortBy = document.getElementById("explore-sort").value;
+        const clearBtn = document.getElementById("explore-clear-btn");
+        clearBtn.style.display = query ? "inline-flex" : "none";
+
+        // Filter
+        let results = EVENTS.filter(ev => {
+          const matchCat = activeCategory === "all" || ev.categories.includes(activeCategory);
+          const matchLoc = activeLocation === "all" || ev.location === activeLocation;
+          const matchQuery = !query ||
+            ev.title.toLowerCase().includes(query) ||
+            ev.org.toLowerCase().includes(query) ||
+            ev.city.toLowerCase().includes(query) ||
+            ev.tags.some(t => t.toLowerCase().includes(query));
+          return matchCat && matchLoc && matchQuery;
+        });
+
+        // Sort
+        if (sortBy === "newest") {
+          results = [...results].sort((a, b) => b.id - a.id);
+        } else if (sortBy === "popular") {
+          results = [...results].sort((a, b) => b.popularity - a.popularity);
+        } else {
+          // recommended: recommended first, then by popularity
+          results = [...results].sort((a, b) => {
+            if (a.recommended && !b.recommended) return -1;
+            if (!a.recommended && b.recommended) return 1;
+            return b.popularity - a.popularity;
+          });
+        }
+
+        renderExploreCards(results, query);
+      }
+
+      function highlightText(text, query) {
+        if (!query) return text;
+        const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(re, '<mark style="background:rgba(244,162,97,0.3);border-radius:3px;padding:0 1px;">$1</mark>');
+      }
+
+      function renderExploreCards(events, query = "") {
+        const body = document.getElementById("explore-body");
+        const empty = document.getElementById("explore-empty");
+        const countEl = document.getElementById("explore-result-count");
+
+        if (events.length === 0) {
+          body.innerHTML = "";
+          body.style.display = "none";
+          empty.style.display = "flex";
+          countEl.textContent = "0 kegiatan ditemukan";
+          return;
+        }
+
+        body.style.display = "block";
+        empty.style.display = "none";
+        countEl.textContent = events.length + " kegiatan ditemukan";
+
+        // Group: recommended + the rest
+        const recommended = events.filter(e => e.recommended);
+        const others = events.filter(e => !e.recommended);
+
+        let html = "";
+
+        if (recommended.length > 0 && activeCategory === "all" && activeLocation === "all" && !query && document.getElementById("explore-sort").value === "recommended") {
+          html += `<div class="explore-section-label" style="display:flex;align-items:center;gap:6px;"><i class="bx bx-star" style="color:var(--warm-orange);"></i> Rekomendasi Untukmu</div>`;
+          recommended.forEach(ev => { html += buildCard(ev, query); });
+          if (others.length > 0) {
+            html += `<div class="explore-section-label" style="margin-top:16px;">Semua Kegiatan</div>`;
+            others.forEach(ev => { html += buildCard(ev, query); });
+          }
+        } else {
+          const label = query
+            ? `Hasil pencarian "<strong>${query}</strong>"`
+            : activeCategory !== "all" || activeLocation !== "all"
+              ? "Hasil Filter"
+              : "Semua Kegiatan";
+          html += `<div class="explore-section-label">${label}</div>`;
+          events.forEach(ev => { html += buildCard(ev, query); });
+        }
+
+        body.innerHTML = html;
+      }
+
+      function buildCard(ev, query) {
+        const spotsPercent = Math.round(((ev.spots - ev.spotsLeft) / ev.spots) * 100);
+        const urgency = ev.spotsLeft <= 5
+          ? `<span style="background:rgba(239,68,68,0.1);color:#ef4444;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:50px;margin-left:4px;"><i class="bx bx-alarm"></i> ${ev.spotsLeft} slot tersisa!</span>`
+          : ev.spotsLeft <= 15
+            ? `<span style="background:rgba(245,158,11,0.1);color:#f59e0b;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:50px;margin-left:4px;">${ev.spotsLeft} slot tersisa</span>`
+            : "";
+        const recBadge = ev.recommended
+          ? `<span style="background:rgba(244,162,97,0.15);color:#c47a30;font-size:0.58rem;font-weight:700;padding:2px 6px;border-radius:50px;margin-left:4px;"><i class="bx bx-star"></i> Match</span>`
+          : "";
+        const tagsHtml = ev.tags.map((t, i) =>
+          `<span class="event-tag${ev.tagTypes[i] === 'orange' ? ' orange' : ''}">${t}</span>`
+        ).join("");
+
+        const titleHighlighted = highlightText(ev.title, query);
+        const orgHighlighted = highlightText(ev.org, query);
+        const cityHighlighted = highlightText(ev.city, query);
+
+        return `
+        <div class="event-list-card" onclick="openEventDetail(${ev.id})" style="position:relative;">
+          <div class="event-list-img" style="padding:0;overflow:hidden;">
+            <img src="${ev.img}" alt="${ev.title}" loading="lazy" />
+          </div>
+          <div class="event-list-info">
+            <div style="display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;margin-bottom:2px;">
+              <div class="event-list-title" style="margin-bottom:0;">${titleHighlighted}</div>
+              ${recBadge}
+            </div>
+            <div class="event-list-meta">
+              <i class="bx bx-building"></i> ${orgHighlighted} &nbsp;·&nbsp; <i class="bx bx-map-pin"></i> ${cityHighlighted}
+            </div>
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:6px;">
+              <i class="bx bx-calendar" style="font-size:0.65rem;color:#aaa;"></i>
+              <span style="font-size:0.65rem;color:#aaa;">${ev.date}</span>
+              ${urgency}
+            </div>
+            <div class="event-tags" style="margin-bottom:6px;">${tagsHtml}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="view-link">Lihat detail <i class="bx bx-chevron-right"></i></div>
+              <div style="display:flex;align-items:center;gap:5px;">
+                <div style="width:60px;height:4px;background:var(--light-grey);border-radius:50px;overflow:hidden;">
+                  <div style="height:100%;width:${spotsPercent}%;background:${spotsPercent >= 80 ? '#ef4444' : spotsPercent >= 60 ? '#f59e0b' : 'var(--deep-green)'};border-radius:50px;transition:width 0.4s;"></div>
+                </div>
+                <span style="font-size:0.6rem;color:#aaa;white-space:nowrap;">${ev.spotsLeft}/${ev.spots}</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      function openEventDetail(id) {
+        const ev = EVENTS.find(e => e.id === id);
+        if (!ev) return;
+        // Update detail screen dynamically
+        const detailHero = document.querySelector("#screen-detail .detail-hero img");
+        const detailTitle = document.querySelector("#screen-detail .detail-title");
+        const detailMetaDate = document.querySelector("#screen-detail .detail-meta:first-child");
+        const detailMetaCity = document.querySelector("#screen-detail .detail-meta:last-child");
+        const detailTags = document.querySelector("#screen-detail .detail-tags");
+        if (detailHero) detailHero.src = ev.img.replace("w=120", "w=800");
+        if (detailTitle) detailTitle.textContent = ev.title;
+        if (detailMetaDate) detailMetaDate.innerHTML = `<i class="bx bx-calendar"></i> ${ev.date}`;
+        if (detailMetaCity) detailMetaCity.innerHTML = `<i class="bx bx-map"></i> ${ev.city}`;
+        if (detailTags) {
+          detailTags.innerHTML = ev.tags.map((t, i) =>
+            `<span class="detail-tag">${t}</span>`
+          ).join("");
+        }
+        switchNavTo("detail");
+      }
+
+      // ============================================================
+      //  SCREEN NAVIGATION
+      // ============================================================
       const screens = ["home", "explore", "detail", "calendar", "profile"];
 
       function showScreen(name, btn) {
@@ -1882,34 +2234,21 @@
           document.getElementById("screen-" + s).classList.remove("active");
           document.getElementById("btn-" + s)?.classList.remove("active");
         });
-        document
-          .querySelectorAll(".page-nav button")
-          .forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".page-nav button").forEach((b) => b.classList.remove("active"));
         document.getElementById("screen-" + name).classList.add("active");
         document.getElementById("btn-" + name)?.classList.add("active");
         if (btn) btn.classList.add("active");
+        if (name === "explore") applyExploreFilters();
       }
 
       function switchNavTo(name) {
-        const btnMap = {
-          home: 0,
-          explore: 1,
-          detail: 2,
-          calendar: 3,
-          profile: 4,
-        };
+        const btnMap = { home: 0, explore: 1, detail: 2, calendar: 3, profile: 4 };
         const navBtns = document.querySelectorAll(".page-nav button");
         showScreen(name, navBtns[btnMap[name]]);
       }
 
-      // Filter chips interactivity
-      document.querySelectorAll(".chip").forEach((chip) => {
-        chip.addEventListener("click", function () {
-          document
-            .querySelectorAll(".chip")
-            .forEach((c) => c.classList.remove("active"));
-          this.classList.add("active");
-        });
+      document.addEventListener("DOMContentLoaded", () => {
+        applyExploreFilters();
       });
     </script>
   </body>
