@@ -1096,9 +1096,756 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* ====== AUTH OVERLAY ====== */
+      #auth-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        background: linear-gradient(
+          135deg,
+          #0e1a16 0%,
+          #1c2e28 50%,
+          #0e1a16 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      #auth-overlay::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          rgba(59, 98, 85, 0.15) 1px,
+          transparent 1px
+        );
+        background-size: 28px 28px;
+      }
+      .auth-card {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 24px;
+        padding: 40px 44px;
+        width: 460px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        position: relative;
+        z-index: 1;
+        animation: authIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes authIn {
+        from {
+          opacity: 0;
+          transform: translateY(32px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .auth-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+        margin-bottom: 28px;
+      }
+      .auth-logo-img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        margin-bottom: 6px;
+      }
+      .auth-logo-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--deep-green);
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+      }
+      .auth-logo-text {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--dark-text);
+        letter-spacing: -0.5px;
+      }
+      .auth-logo-sub {
+        font-size: 0.65rem;
+        color: var(--muted-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+      }
+      .auth-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--dark-text);
+        margin-bottom: 4px;
+      }
+      .auth-sub {
+        font-size: 0.85rem;
+        color: #888;
+        margin-bottom: 28px;
+        line-height: 1.5;
+      }
+      .auth-field {
+        margin-bottom: 16px;
+      }
+      .auth-field label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #555;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+      }
+      .auth-input {
+        width: 100%;
+        background: var(--off-white);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 12px;
+        padding: 11px 14px;
+        font-size: 0.88rem;
+        color: var(--dark-text);
+        outline: none;
+        font-family: "Inter", sans-serif;
+        transition: border-color 0.15s;
+      }
+      .auth-input:focus {
+        border-color: var(--deep-green);
+        background: #fff;
+      }
+      .auth-input.prefilled {
+        background: rgba(59, 98, 85, 0.05);
+        border-color: rgba(59, 98, 85, 0.2);
+        color: #555;
+      }
+      .auth-btn {
+        width: 100%;
+        background: var(--deep-green);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 13px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 8px;
+        box-shadow: 0 6px 20px rgba(59, 98, 85, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .auth-btn:hover {
+        background: var(--deep-green-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 28px rgba(59, 98, 85, 0.35);
+      }
+      .auth-btn-secondary {
+        width: 100%;
+        background: transparent;
+        color: var(--dark-text);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 12px;
+        padding: 11px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 8px;
+      }
+      .auth-btn-secondary:hover {
+        border-color: var(--deep-green);
+        color: var(--deep-green);
+      }
+      .auth-divider {
+        text-align: center;
+        font-size: 0.78rem;
+        color: #bbb;
+        margin: 14px 0;
+        position: relative;
+      }
+      .auth-divider::before,
+      .auth-divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 42%;
+        height: 1px;
+        background: var(--light-grey);
+      }
+      .auth-divider::before {
+        left: 0;
+      }
+      .auth-divider::after {
+        right: 0;
+      }
+      .auth-switch {
+        text-align: center;
+        font-size: 0.82rem;
+        color: #888;
+        margin-top: 18px;
+      }
+      .auth-switch a {
+        color: var(--deep-green);
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .auth-switch a:hover {
+        text-decoration: underline;
+      }
+      .auth-prefill-note {
+        background: rgba(59, 98, 85, 0.07);
+        border: 1px solid rgba(59, 98, 85, 0.15);
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-bottom: 20px;
+        font-size: 0.78rem;
+        color: var(--deep-green);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .auth-page {
+        display: none;
+      }
+      .auth-page.active {
+        display: block;
+      }
+
+      /* ====== VERIFY UPLOAD PAGE ====== */
+      .verify-upload-area {
+        border: 2px dashed var(--light-grey);
+        border-radius: 14px;
+        padding: 28px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: var(--off-white);
+        margin-bottom: 16px;
+      }
+      .verify-upload-area:hover,
+      .verify-upload-area.dragover {
+        border-color: var(--deep-green);
+        background: rgba(59, 98, 85, 0.04);
+      }
+      .verify-upload-icon {
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+        color: var(--muted-green);
+      }
+      .verify-upload-text {
+        font-size: 0.85rem;
+        color: #888;
+        line-height: 1.5;
+      }
+      .verify-upload-text strong {
+        color: var(--deep-green);
+      }
+      .verify-file-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(59, 98, 85, 0.06);
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-bottom: 8px;
+        font-size: 0.82rem;
+      }
+      .verify-file-item .file-name {
+        font-weight: 600;
+        color: var(--dark-text);
+        flex: 1;
+      }
+      .verify-file-item .file-size {
+        color: #aaa;
+        font-size: 0.72rem;
+      }
+      .verify-check {
+        color: var(--success);
+        font-size: 1.1rem;
+      }
+
+      /* ====== WAITING SCREEN ====== */
+      .waiting-screen {
+        text-align: center;
+        padding: 20px 0;
+      }
+      .waiting-spinner {
+        width: 64px;
+        height: 64px;
+        border: 4px solid var(--light-grey);
+        border-top-color: var(--deep-green);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .waiting-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--dark-text);
+        margin-bottom: 8px;
+      }
+      .waiting-sub {
+        font-size: 0.85rem;
+        color: #888;
+        line-height: 1.6;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .waiting-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 50px;
+        padding: 5px 14px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-top: 16px;
+      }
+      .waiting-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--warning);
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(1.3);
+        }
+      }
+
+      /* ====== STAR RATING ====== */
+      .star-rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .star {
+        font-size: 0.85rem;
+        color: #f59e0b;
+        line-height: 1;
+      }
+      .star.empty {
+        color: #e0e0e0;
+      }
+      .rating-num {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        margin-left: 4px;
+      }
+      .rating-count {
+        font-size: 0.68rem;
+        color: #aaa;
+        margin-left: 2px;
+      }
+
+      /* Volunteer rating modal */
+      .rating-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 8000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .rating-modal-overlay.show {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .rating-modal {
+        background: #fff;
+        border-radius: 20px;
+        padding: 32px 36px;
+        width: 400px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: scale(0.92);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .rating-modal-title {
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--dark-text);
+        margin-bottom: 4px;
+      }
+      .rating-modal-sub {
+        font-size: 0.8rem;
+        color: #888;
+        margin-bottom: 20px;
+      }
+      .rating-stars-big {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .rating-stars-big .big-star {
+        font-size: 2.2rem;
+        cursor: pointer;
+        transition: transform 0.15s;
+        color: #e0e0e0;
+        line-height: 1;
+      }
+      .rating-stars-big .big-star:hover,
+      .rating-stars-big .big-star.lit {
+        color: #f59e0b;
+        transform: scale(1.15);
+      }
+      .rating-comment {
+        width: 100%;
+        background: var(--off-white);
+        border: 1.5px solid var(--light-grey);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        font-family: "Inter", sans-serif;
+        color: var(--dark-text);
+        outline: none;
+        resize: none;
+        transition: border-color 0.15s;
+      }
+      .rating-comment:focus {
+        border-color: var(--deep-green);
+        background: #fff;
+      }
+      .rating-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
     </style>
   </head>
   <body>
+    <!-- ====== AUTH OVERLAY ====== -->
+    <div id="auth-overlay">
+      <div class="auth-card">
+        <!-- LOGIN PAGE -->
+        <div class="auth-page active" id="auth-login">
+          <div class="auth-logo">
+            <img
+              src="LogoVolunusa.jpeg"
+              alt="Volunusa Logo"
+              class="auth-logo-img"
+            />
+            <div class="auth-logo-text">Volunusa</div>
+            <div class="auth-logo-sub">Organizer Panel</div>
+          </div>
+          <div class="auth-title">Welcome</div>
+          <div class="auth-sub">Login to Your Dashboard</div>
+          <div class="auth-field">
+            <label>Email</label>
+            <input
+              class="auth-input prefilled"
+              type="email"
+              value="admin@ecolnusantara.org"
+              readonly
+            />
+          </div>
+          <div class="auth-field">
+            <label>Password</label>
+            <input
+              class="auth-input prefilled"
+              type="password"
+              value="demo1234"
+              readonly
+            />
+          </div>
+          <button class="auth-btn" onclick="doLogin()">
+            <i class="bx bx-log-in"></i> Login
+          </button>
+          <div class="auth-divider">or</div>
+          <button class="auth-btn-secondary" onclick="showAuthPage('signup')">
+            Sign Up
+          </button>
+          <div class="auth-switch">
+            Don't have an account yet?
+            <a onclick="showAuthPage('signup')">Sign up now →</a>
+          </div>
+        </div>
+
+        <!-- SIGNUP PAGE -->
+        <div class="auth-page" id="auth-signup">
+          <div class="auth-logo">
+            <img
+              src="LogoVolunusa.jpeg"
+              alt="Volunusa Logo"
+              class="auth-logo-img"
+            />
+            <div>
+              <div class="auth-logo-text">Volunusa</div>
+              <div class="auth-logo-sub">Organizer Panel</div>
+            </div>
+          </div>
+          <div class="auth-title">Register</div>
+          <div class="auth-sub">Create an Organizer Account</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+            <div class="auth-field">
+              <label>Organization Name</label>
+              <input
+                class="auth-input prefilled"
+                value="EcoNusantara Foundation"
+                readonly
+              />
+            </div>
+            <div class="auth-field">
+              <label>Organization Type</label>
+              <input
+                class="auth-input prefilled"
+                value="NGO / Yayasan"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label>Official Email</label>
+            <input
+              class="auth-input prefilled"
+              type="email"
+              value="admin@econusantara.org"
+              readonly
+            />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+            <div class="auth-field">
+              <label>Password</label>
+              <input
+                class="auth-input prefilled"
+                type="password"
+                value="demo1234"
+                readonly
+              />
+            </div>
+            <div class="auth-field">
+              <label>Confirm Password</label>
+              <input
+                class="auth-input prefilled"
+                type="password"
+                value="demo1234"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label>Phone Number</label>
+            <input
+              class="auth-input prefilled"
+              value="+62 812-3456-7890"
+              readonly
+            />
+          </div>
+          <button class="auth-btn" onclick="showAuthPage('verify')">
+            <i class="bx bx-right-arrow-alt"></i> Continue
+          </button>
+          <div class="auth-switch">
+            Already have an account?
+            <a onclick="showAuthPage('login')">← Login</a>
+          </div>
+        </div>
+
+        <!-- VERIFY PAGE -->
+        <div class="auth-page" id="auth-verify">
+          <div class="auth-logo">
+            <div>
+              <div class="auth-logo-text">Document Verification</div>
+            </div>
+          </div>
+          <div class="auth-title">Upload Organization Documents</div>
+          <div class="auth-sub">
+            We need to verify the legal status of your organization before your
+            account can be activated.
+          </div>
+
+          <div
+            class="verify-upload-area"
+            id="upload-area"
+            onclick="simulateUpload()"
+          >
+            <div class="verify-upload-icon">
+              <i class="bx bx-cloud-upload"></i>
+            </div>
+            <div class="verify-upload-text">
+              <strong>Click to upload</strong> or drag & drop<br />
+              Articles of incorporation, Kemenkumham SK, or other legal
+              documents<br />
+              <span
+                style="
+                  font-size: 0.72rem;
+                  color: #bbb;
+                  margin-top: 4px;
+                  display: block;
+                "
+                >PDF, JPG, PNG — Max. 10MB</span
+              >
+            </div>
+          </div>
+          <div id="uploaded-files" style="display: none">
+            <div class="verify-file-item">
+              <i
+                class="bx bx-file-blank"
+                style="color: var(--deep-green); font-size: 1.2rem"
+              ></i>
+              <span class="file-name">Akta_EcoNusantara_2021.pdf</span>
+              <span class="file-size">2.4 MB</span>
+              <i class="bx bx-check-circle verify-check"></i>
+            </div>
+            <div class="verify-file-item">
+              <i
+                class="bx bx-file-blank"
+                style="color: var(--deep-green); font-size: 1.2rem"
+              ></i>
+              <span class="file-name">SK_Kemenkumham_EcoNusantara.pdf</span>
+              <span class="file-size">1.1 MB</span>
+              <i class="bx bx-check-circle verify-check"></i>
+            </div>
+          </div>
+          <button
+            class="auth-btn"
+            id="submit-verify-btn"
+            style="display: none"
+            onclick="showAuthPage('waiting')"
+          >
+            <i class="bx bx-send"></i> Send for Verification
+          </button>
+          <button
+            class="auth-btn-secondary"
+            onclick="showAuthPage('signup')"
+            style="margin-top: 8px"
+          >
+            ← Return
+          </button>
+        </div>
+
+        <!-- WAITING PAGE -->
+        <div class="auth-page" id="auth-waiting">
+          <div class="waiting-screen">
+            <div style="font-size: 3.5rem; margin-bottom: 12px">⏳</div>
+            <div class="waiting-title">Documents Sent!</div>
+            <div class="waiting-sub">
+              Our team is currently reviewing your organization's documents. The
+              verification process usually takes 1–2 business days.
+            </div>
+            <div class="waiting-badge">
+              <div class="waiting-dot"></div>
+              Waiting for admin verification
+            </div>
+            <div style="margin-top: 28px">
+              <div class="waiting-spinner"></div>
+              <div style="font-size: 0.78rem; color: #bbb; margin-top: 8px">
+                Processing documents...
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: #ccc; margin-top: 16px">
+              Redirecting to dashboard in a few seconds...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /AUTH OVERLAY -->
+
+    <!-- RATING MODAL -->
+    <div class="rating-modal-overlay" id="rating-modal">
+      <div class="rating-modal">
+        <div class="rating-modal-title" id="rating-modal-title">
+          Rate Volunteer
+        </div>
+        <div class="rating-modal-sub" id="rating-modal-sub">
+          How was this volunteer's performance at your event?
+        </div>
+        <div class="rating-stars-big" id="rating-stars-big">
+          <span class="big-star" data-val="1" onclick="setRating(1)">★</span>
+          <span class="big-star" data-val="2" onclick="setRating(2)">★</span>
+          <span class="big-star" data-val="3" onclick="setRating(3)">★</span>
+          <span class="big-star" data-val="4" onclick="setRating(4)">★</span>
+          <span class="big-star" data-val="5" onclick="setRating(5)">★</span>
+        </div>
+        <div
+          id="rating-label"
+          style="
+            text-align: center;
+            font-size: 0.82rem;
+            color: #888;
+            margin-bottom: 16px;
+            min-height: 20px;
+            font-weight: 600;
+          "
+        ></div>
+        <textarea
+          class="rating-comment"
+          id="rating-comment"
+          rows="3"
+          placeholder="Add a comment (optional)..."
+        >
+Very professional and hardworking throughout the event. Highly recommended!</textarea
+        >
+        <div class="rating-actions">
+          <button
+            class="btn btn-secondary"
+            style="flex: 1"
+            onclick="closeRatingModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            style="flex: 2"
+            onclick="submitRating()"
+          >
+            <i class="bx bx-check-circle"></i> Save Rating
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- TOP NAVBAR -->
     <nav class="top-navbar">
       <div class="navbar-brand">
@@ -1149,7 +1896,7 @@
             <div>
               <div class="page-title">Dashboard</div>
               <div class="page-subtitle">
-                Monitor semua aktivitas organisasimu
+                Monitor your organization activites
               </div>
             </div>
             <div class="page-actions">
@@ -1157,7 +1904,7 @@
                 class="btn btn-secondary btn-sm"
                 onclick="
                   showToast(
-                    '<i class=&quot;bx bx-rocket&quot;></i> Fitur boost akan segera tersedia!',
+                    '<i class=&quot;bx bx-rocket&quot;></i> Boost will be available soon!',
                   )
                 "
               >
@@ -1167,7 +1914,7 @@
                 class="btn btn-primary btn-sm"
                 onclick="
                   showToast(
-                    '<i class=&quot;bx bx-check-circle&quot;></i> Event baru berhasil dibuat!',
+                    '<i class=&quot;bx bx-check-circle&quot;></i> New event created successfully!',
                   )
                 "
               >
@@ -1187,7 +1934,7 @@
                   <i class="bx bx-clipboard"></i>
                 </div>
               </div>
-              <div class="stat-card-change up">↑ 2 bulan ini</div>
+              <div class="stat-card-change up">↑ 2 this month</div>
             </div>
             <div class="stat-card">
               <div class="stat-card-top">
@@ -1232,14 +1979,12 @@
               <div class="chart-header">
                 <div>
                   <div class="chart-title">Applicant Trend</div>
-                  <div class="chart-sub">
-                    Jumlah pendaftar harian minggu ini
-                  </div>
+                  <div class="chart-sub">Daily applicant count this week</div>
                 </div>
                 <select class="chart-select">
-                  <option>Harian</option>
-                  <option>Mingguan</option>
-                  <option>Bulanan</option>
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
                 </select>
               </div>
               <div class="bar-chart-wrap">
@@ -1481,7 +2226,7 @@
             <div>
               <div class="page-title">My Events</div>
               <div class="page-subtitle">
-                Kelola semua kegiatan volunteeringmu
+                Manage your volunteer events, applicants, and details
               </div>
             </div>
             <div class="page-actions">
@@ -1489,7 +2234,7 @@
                 class="btn btn-primary"
                 onclick="
                   showToast(
-                    '<i class=&quot;bx bx-check-circle&quot;></i> Event baru berhasil dibuat!',
+                    '<i class=&quot;bx bx-check-circle&quot;></i> New event created successfully!',
                   )
                 "
               >
@@ -1973,11 +2718,12 @@
                 <tr>
                   <th>Applicant</th>
                   <th>Skills</th>
+                  <th>Rating</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody id="applicant-tbody">
+                <tr id="row-ahmad">
                   <td>
                     <div style="display: flex; align-items: center; gap: 10px">
                       <div
@@ -2000,7 +2746,7 @@
                           Ahmad Setiawan
                         </div>
                         <div style="font-size: 0.7rem; color: #888">
-                          Persona
+                          4 events &middot; 100% hadir
                         </div>
                       </div>
                     </div>
@@ -2009,30 +2755,40 @@
                     <span class="skill-tag">Teamwork</span
                     ><span class="skill-tag">Photography</span>
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="rating-num">5.0</span>
+                    </div>
+                    <div class="rating-count">dari 4 event</div>
+                  </td>
                   <td class="actions-cell">
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-check-circle&quot;></i> Ahmad Setiawan diterima!',
-                        )
-                      "
+                      onclick="acceptApplicant('row-ahmad', 'Ahmad Setiawan')"
                     >
                       <i class="bx bx-check-circle"></i> Accept
                     </button>
                     <button
                       class="btn btn-danger btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-x-circle&quot;></i> Lamaran ditolak.',
-                        )
-                      "
+                      onclick="rejectApplicant('row-ahmad', 'Ahmad Setiawan')"
                     >
                       <i class="bx bx-x-circle"></i> Reject
                     </button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      title="Beri Rating"
+                      onclick="openRatingModal('Ahmad Setiawan')"
+                    >
+                      <i class="bx bx-star"></i>
+                    </button>
                   </td>
                 </tr>
-                <tr>
+                <tr id="row-clara">
                   <td>
                     <div style="display: flex; align-items: center; gap: 10px">
                       <div
@@ -2054,7 +2810,7 @@
                           Clara Wijaya
                         </div>
                         <div style="font-size: 0.7rem; color: #888">
-                          Persona
+                          2 events &middot; 100% hadir
                         </div>
                       </div>
                     </div>
@@ -2063,30 +2819,40 @@
                     <span class="skill-tag sec">Communication</span
                     ><span class="skill-tag sec">Event Planning</span>
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="rating-num">4.2</span>
+                    </div>
+                    <div class="rating-count">dari 2 event</div>
+                  </td>
                   <td class="actions-cell">
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-check-circle&quot;></i> Clara Wijaya diterima!',
-                        )
-                      "
+                      onclick="acceptApplicant('row-clara', 'Clara Wijaya')"
                     >
                       <i class="bx bx-check-circle"></i> Accept
                     </button>
                     <button
                       class="btn btn-danger btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-x-circle&quot;></i> Lamaran ditolak.',
-                        )
-                      "
+                      onclick="rejectApplicant('row-clara', 'Clara Wijaya')"
                     >
                       <i class="bx bx-x-circle"></i> Reject
                     </button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      title="Beri Rating"
+                      onclick="openRatingModal('Clara Wijaya')"
+                    >
+                      <i class="bx bx-star"></i>
+                    </button>
                   </td>
                 </tr>
-                <tr>
+                <tr id="row-budi">
                   <td>
                     <div style="display: flex; align-items: center; gap: 10px">
                       <div
@@ -2108,7 +2874,7 @@
                           Budi Hartono
                         </div>
                         <div style="font-size: 0.7rem; color: #888">
-                          Persona
+                          6 events &middot; 83% hadir
                         </div>
                       </div>
                     </div>
@@ -2117,23 +2883,40 @@
                     <span class="skill-tag">Project Management</span
                     ><span class="skill-tag">Leadership</span>
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="rating-num">4.5</span>
+                    </div>
+                    <div class="rating-count">dari 6 event</div>
+                  </td>
                   <td class="actions-cell">
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-check-circle&quot;></i> Budi Hartono diterima!',
-                        )
-                      "
+                      onclick="acceptApplicant('row-budi', 'Budi Hartono')"
                     >
                       <i class="bx bx-check-circle"></i> Accept
                     </button>
-                    <button class="btn btn-danger btn-sm">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      onclick="rejectApplicant('row-budi', 'Budi Hartono')"
+                    >
                       <i class="bx bx-x-circle"></i> Reject
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      title="Beri Rating"
+                      onclick="openRatingModal('Budi Hartono')"
+                    >
+                      <i class="bx bx-star"></i>
                     </button>
                   </td>
                 </tr>
-                <tr>
+                <tr id="row-siti">
                   <td>
                     <div style="display: flex; align-items: center; gap: 10px">
                       <div
@@ -2155,7 +2938,7 @@
                           Siti Anggraini
                         </div>
                         <div style="font-size: 0.7rem; color: #888">
-                          Persona
+                          3 events &middot; 100% hadir
                         </div>
                       </div>
                     </div>
@@ -2164,19 +2947,36 @@
                     <span class="skill-tag sec">Social Media</span
                     ><span class="skill-tag sec">Public Speaking</span>
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="rating-num">4.8</span>
+                    </div>
+                    <div class="rating-count">dari 3 event</div>
+                  </td>
                   <td class="actions-cell">
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="
-                        showToast(
-                          '<i class=&quot;bx bx-check-circle&quot;></i> Siti Anggraini diterima!',
-                        )
-                      "
+                      onclick="acceptApplicant('row-siti', 'Siti Anggraini')"
                     >
                       <i class="bx bx-check-circle"></i> Accept
                     </button>
-                    <button class="btn btn-danger btn-sm">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      onclick="rejectApplicant('row-siti', 'Siti Anggraini')"
+                    >
                       <i class="bx bx-x-circle"></i> Reject
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      title="Beri Rating"
+                      onclick="openRatingModal('Siti Anggraini')"
+                    >
+                      <i class="bx bx-star"></i>
                     </button>
                   </td>
                 </tr>
@@ -2190,9 +2990,7 @@
           <div class="page-header-bar">
             <div>
               <div class="page-title">Volunteers Database</div>
-              <div class="page-subtitle">
-                Temukan dan undang relawan yang tepat
-              </div>
+              <div class="page-subtitle">Find, rate and invite volunteers!</div>
             </div>
             <div class="page-actions">
               <button class="btn btn-secondary btn-sm">
@@ -2202,7 +3000,7 @@
                 class="btn btn-primary btn-sm"
                 onclick="
                   showToast(
-                    '<i class=&quot;bx bx-mail-send&quot;></i> Undangan berhasil dikirim!',
+                    '<i class=&quot;bx bx-mail-send&quot;></i> Invitation Sent!',
                   )
                 "
               >
@@ -2238,6 +3036,7 @@
                   <th>Name</th>
                   <th>Skills</th>
                   <th>Experience</th>
+                  <th>Rating</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -2278,9 +3077,23 @@
                       ><i class="bx bx-award"></i> Senior</span
                     >
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="rating-num">5.0</span>
+                    </div>
+                    <div class="rating-count">dari 4 event</div>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn btn-secondary btn-sm">
-                      <i class="bx bx-star"></i> Shortlist</button
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="openRatingModal('Ahmad Setiawan')"
+                    >
+                      <i class="bx bx-star"></i> Rate</button
                     ><button
                       class="btn btn-primary btn-sm"
                       onclick="
@@ -2329,9 +3142,23 @@
                       ><i class="bx bx-star"></i> Intermediate</span
                     >
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="rating-num">4.2</span>
+                    </div>
+                    <div class="rating-count">dari 2 event</div>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn btn-secondary btn-sm">
-                      <i class="bx bx-star"></i> Shortlist</button
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="openRatingModal('Clara Wijaya')"
+                    >
+                      <i class="bx bx-star"></i> Rate</button
                     ><button
                       class="btn btn-primary btn-sm"
                       onclick="
@@ -2380,9 +3207,23 @@
                       ><i class="bx bx-award"></i> Senior</span
                     >
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="rating-num">4.5</span>
+                    </div>
+                    <div class="rating-count">dari 6 event</div>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn btn-secondary btn-sm">
-                      <i class="bx bx-star"></i> Shortlist</button
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="openRatingModal('Budi Hartono')"
+                    >
+                      <i class="bx bx-star"></i> Rate</button
                     ><button
                       class="btn btn-primary btn-sm"
                       onclick="
@@ -2431,9 +3272,23 @@
                       ><i class="bx bx-star"></i> Intermediate</span
                     >
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="rating-num">4.8</span>
+                    </div>
+                    <div class="rating-count">dari 3 event</div>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn btn-secondary btn-sm">
-                      <i class="bx bx-star"></i> Shortlist</button
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="openRatingModal('Siti Anggraini')"
+                    >
+                      <i class="bx bx-star"></i> Rate</button
                     ><button
                       class="btn btn-primary btn-sm"
                       onclick="
@@ -2482,9 +3337,23 @@
                       ><i class="bx bx-star"></i> Junior</span
                     >
                   </td>
+                  <td>
+                    <div class="star-rating">
+                      <span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="star empty">&#9733;</span
+                      ><span class="rating-num">3.8</span>
+                    </div>
+                    <div class="rating-count">dari 1 event</div>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn btn-secondary btn-sm">
-                      <i class="bx bx-star"></i> Shortlist</button
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="openRatingModal('Faisal Pratama')"
+                    >
+                      <i class="bx bx-star"></i> Rate</button
                     ><button
                       class="btn btn-primary btn-sm"
                       onclick="
@@ -2566,7 +3435,7 @@
 
           <div class="analytics-grid">
             <div class="analytics-card green">
-              <div class="analytics-label">Jumlah Pendaftar</div>
+              <div class="analytics-label">Participants</div>
               <div class="analytics-num">1.250</div>
               <div class="analytics-change">↑ 32.5% vs last month</div>
             </div>
@@ -2591,12 +3460,14 @@
             <div class="chart-card">
               <div class="chart-header">
                 <div>
-                  <div class="chart-title">Pendaftar per Hari</div>
-                  <div class="chart-sub">Tren jumlah pendaftar setiap hari</div>
+                  <div class="chart-title">Participants per Day</div>
+                  <div class="chart-sub">
+                    Trend of participant count each day
+                  </div>
                 </div>
                 <select class="chart-select">
-                  <option>Harian</option>
-                  <option>Mingguan</option>
+                  <option>Daily</option>
+                  <option>Weekly</option>
                 </select>
               </div>
               <svg
@@ -2674,7 +3545,7 @@
             </div>
             <div class="chart-card">
               <div class="chart-title" style="margin-bottom: 14px">
-                Status Relawan
+                Volunteer Status
               </div>
               <div class="donut-wrap">
                 <svg viewBox="0 0 160 160" width="140" height="140">
@@ -2758,7 +3629,7 @@
                         class="legend-dot"
                         style="background: #3b6255"
                       ></span
-                      >Diterima</span
+                      >Accepted</span
                     ><span>425 (34%)</span>
                   </li>
                   <li>
@@ -2767,7 +3638,7 @@
                         class="legend-dot"
                         style="background: #2196f3"
                       ></span
-                      >Hadir</span
+                      >Attended</span
                     ><span>328 (26%)</span>
                   </li>
                   <li>
@@ -2785,7 +3656,7 @@
                         class="legend-dot"
                         style="background: #ef4444"
                       ></span
-                      >Ditolak</span
+                      >Rejected</span
                     ><span>175 (14%)</span>
                   </li>
                 </ul>
@@ -2803,10 +3674,10 @@
             <!-- Boost Performance -->
             <div class="chart-card">
               <div class="chart-title" style="margin-bottom: 4px">
-                Performa Boost Event
+                Event Boost Performance
               </div>
               <div class="chart-sub" style="margin-bottom: 14px">
-                Sebelum & sesudah boost
+                Before and After Boost
               </div>
               <svg
                 viewBox="0 0 200 100"
@@ -2918,10 +3789,10 @@
             <!-- Top Events -->
             <div class="chart-card">
               <div class="chart-title" style="margin-bottom: 4px">
-                Event Terbaik
+                Top Events
               </div>
               <div class="chart-sub" style="margin-bottom: 14px">
-                Event dengan performa tertinggi
+                Event with high performances
               </div>
               <div style="display: flex; flex-direction: column; gap: 10px">
                 <div
@@ -2977,7 +3848,7 @@
                       padding: 3px 8px;
                       border-radius: 50px;
                     "
-                    >120 Pendaftar</span
+                    >120 Participants</span
                   >
                 </div>
                 <div
@@ -3033,7 +3904,7 @@
                       padding: 3px 8px;
                       border-radius: 50px;
                     "
-                    >80 Pendaftar</span
+                    >80 Participants</span
                   >
                 </div>
                 <div
@@ -3089,7 +3960,7 @@
                       padding: 3px 8px;
                       border-radius: 50px;
                     "
-                    >65 Pendaftar</span
+                    >65 Participants</span
                   >
                 </div>
               </div>
@@ -3097,20 +3968,20 @@
             <!-- Insights -->
             <div class="insight-card">
               <div class="chart-title" style="margin-bottom: 4px">
-                <i class="bx bx-bulb"></i> Insight & Rekomendasi
+                <i class="bx bx-bulb"></i> Insights and Recommendation
               </div>
               <div class="chart-sub" style="margin-bottom: 14px">
-                Tips berdasarkan data eventmu
+                Tips based on recent event data to boost your performance
               </div>
               <div class="insight-item">
                 <div class="insight-icon green">
                   <i class="bx bx-line-chart"></i>
                 </div>
                 <div>
-                  <div class="insight-title">Conversion Meningkat</div>
+                  <div class="insight-title">High Conversion Events</div>
                   <div class="insight-desc">
-                    Event dengan deskripsi lengkap memiliki konversi 40% lebih
-                    tinggi.
+                    Event with a complete description have 50% Higher Conversion
+                    Rate
                   </div>
                 </div>
                 <div class="insight-arrow">›</div>
@@ -3120,9 +3991,9 @@
                   <i class="bx bx-rocket"></i>
                 </div>
                 <div>
-                  <div class="insight-title">Boost Efektif</div>
+                  <div class="insight-title">Effective Boosting</div>
                   <div class="insight-desc">
-                    Event yang di-boost mendapatkan 3.2x lebih banyak pendaftar.
+                    Event that are boosted receive 3.2x more registrations.
                   </div>
                 </div>
                 <div class="insight-arrow">›</div>
@@ -3132,10 +4003,9 @@
                   <i class="bx bx-calendar"></i>
                 </div>
                 <div>
-                  <div class="insight-title">Waktu Terbaik Posting</div>
+                  <div class="insight-title">Best Time to Post</div>
                   <div class="insight-desc">
-                    Event yang diposting akhir pekan memiliki engagement lebih
-                    tinggi.
+                    Event that are posted on weekends have higher engagement.
                   </div>
                 </div>
                 <div class="insight-arrow">›</div>
@@ -3150,7 +4020,7 @@
             <div>
               <div class="page-title">Settings</div>
               <div class="page-subtitle">
-                Kelola profil, tim, dan langganan organisasimu
+                Manage your profile, team, and account settings
               </div>
             </div>
           </div>
@@ -3361,6 +4231,62 @@
     </div>
 
     <script>
+      // ============================================================
+      //  AUTH FLOW
+      // ============================================================
+      function showAuthPage(page) {
+        document
+          .querySelectorAll(".auth-page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("auth-" + page).classList.add("active");
+        if (page === "waiting") {
+          // auto-proceed to dashboard after 2s
+          setTimeout(() => enterDashboard(), 2000);
+        }
+      }
+
+      function doLogin() {
+        const btn = event.currentTarget;
+        btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Masuk...';
+        btn.disabled = true;
+        setTimeout(() => enterDashboard(), 1400);
+      }
+
+      function simulateUpload() {
+        const area = document.getElementById("upload-area");
+        const files = document.getElementById("uploaded-files");
+        const submitBtn = document.getElementById("submit-verify-btn");
+        area.innerHTML =
+          '<div class="verify-upload-icon" style="color:var(--deep-green);"><i class="bx bx-loader-alt bx-spin"></i></div><div class="verify-upload-text">Mengupload dokumen...</div>';
+        setTimeout(() => {
+          area.style.display = "none";
+          files.style.display = "block";
+          submitBtn.style.display = "flex";
+        }, 1200);
+      }
+
+      function enterDashboard() {
+        const overlay = document.getElementById("auth-overlay");
+        overlay.style.transition = "opacity 0.5s ease";
+        overlay.style.opacity = "0";
+        setTimeout(() => {
+          overlay.style.display = "none";
+          // animate stat counters
+          setTimeout(() => {
+            const statNums = document.querySelectorAll(
+              "#page-dashboard .stat-card-num",
+            );
+            const vals = [5, 302, 120];
+            statNums.forEach((el, i) => {
+              if (vals[i]) animateNum(el, vals[i]);
+            });
+          }, 200);
+        }, 500);
+      }
+
+      // ============================================================
+      //  PAGE NAVIGATION
+      // ============================================================
       const pages = [
         "dashboard",
         "events",
@@ -3377,14 +4303,10 @@
         });
         const target = document.getElementById("page-" + name);
         if (target) target.classList.add("active");
-
-        // Nav links
         document
           .querySelectorAll(".nav-link")
           .forEach((b) => b.classList.remove("active"));
         if (navBtn) navBtn.classList.add("active");
-
-        // Sidebar items
         document
           .querySelectorAll(".sidebar-item")
           .forEach((b) => b.classList.remove("active"));
@@ -3396,16 +4318,15 @@
           .querySelectorAll(".table-tab")
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        const rows = document.querySelectorAll("tbody tr[data-status]");
-        rows.forEach((row) => {
-          if (status === "all" || row.dataset.status === status) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
+        document.querySelectorAll("tbody tr[data-status]").forEach((row) => {
+          row.style.display =
+            status === "all" || row.dataset.status === status ? "" : "none";
         });
       }
 
+      // ============================================================
+      //  TOAST
+      // ============================================================
       function showToast(msg) {
         const toast = document.getElementById("toast");
         document.getElementById("toast-msg").innerHTML = msg;
@@ -3413,28 +4334,106 @@
         setTimeout(() => toast.classList.remove("show"), 3000);
       }
 
-      // Animate stat numbers on load
-      function animateNum(el, target, suffix) {
+      // ============================================================
+      //  APPLICANT ACCEPT / REJECT
+      // ============================================================
+      function acceptApplicant(rowId, name) {
+        const row = document.getElementById(rowId);
+        if (!row) return;
+        const actionsTd = row.querySelector(".actions-cell");
+        actionsTd.innerHTML =
+          '<span style="background:rgba(34,197,94,0.1);color:#22c55e;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:5px;"><i class="bx bx-check-circle"></i> Diterima</span>';
+        row.style.background = "rgba(34,197,94,0.04)";
+        showToast(
+          '<i class="bx bx-check-circle"></i> ' + name + " berhasil diterima!",
+        );
+      }
+
+      function rejectApplicant(rowId, name) {
+        const row = document.getElementById(rowId);
+        if (!row) return;
+        const actionsTd = row.querySelector(".actions-cell");
+        actionsTd.innerHTML =
+          '<span style="background:rgba(239,68,68,0.08);color:#ef4444;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:5px;"><i class="bx bx-x-circle"></i> Ditolak</span>';
+        row.style.background = "rgba(239,68,68,0.03)";
+        row.style.opacity = "0.6";
+        showToast(
+          '<i class="bx bx-x-circle"></i> Lamaran ' + name + " ditolak.",
+        );
+      }
+
+      // ============================================================
+      //  RATING MODAL
+      // ============================================================
+      let currentRating = 4;
+      let currentRatingTarget = "";
+      const ratingLabels = [
+        "",
+        "Kurang Baik",
+        "Cukup",
+        "Baik",
+        "Sangat Baik",
+        "Luar Biasa!",
+      ];
+
+      function openRatingModal(name) {
+        currentRatingTarget = name;
+        currentRating = 4;
+        document.getElementById("rating-modal-title").textContent =
+          "Beri Rating — " + name;
+        document.getElementById("rating-modal-sub").textContent =
+          "Bagaimana performa " + name + " di event ini?";
+        document.getElementById("rating-comment").value =
+          "Sangat profesional, tepat waktu, dan bekerja keras sepanjang event. Recommended!";
+        setRating(4);
+        document.getElementById("rating-modal").classList.add("show");
+      }
+
+      function setRating(val) {
+        currentRating = val;
+        document
+          .querySelectorAll("#rating-stars-big .big-star")
+          .forEach((s, i) => {
+            s.classList.toggle("lit", i < val);
+          });
+        document.getElementById("rating-label").textContent =
+          ratingLabels[val] || "";
+      }
+
+      function closeRatingModal() {
+        document.getElementById("rating-modal").classList.remove("show");
+      }
+
+      function submitRating() {
+        closeRatingModal();
+        showToast(
+          '<i class="bx bx-star"></i> Rating ' +
+            currentRating +
+            "★ untuk " +
+            currentRatingTarget +
+            " berhasil disimpan!",
+        );
+      }
+
+      // Close modal on overlay click
+      document
+        .getElementById("rating-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeRatingModal();
+        });
+
+      // ============================================================
+      //  STAT COUNTER ANIMATION
+      // ============================================================
+      function animateNum(el, target) {
         let start = 0;
         const step = target / 40;
         const timer = setInterval(() => {
           start = Math.min(start + step, target);
-          el.textContent =
-            (suffix ? suffix : "") + Math.floor(start).toLocaleString("id-ID");
+          el.textContent = Math.floor(start).toLocaleString("id-ID");
           if (start >= target) clearInterval(timer);
         }, 30);
       }
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          const statNums = document.querySelectorAll(
-            "#page-dashboard .stat-card-num",
-          );
-          const vals = [5, 302, 120];
-          statNums.forEach((el, i) => {
-            if (vals[i]) animateNum(el, vals[i], "");
-          });
-        }, 300);
-      });
     </script>
   </body>
 </html>
